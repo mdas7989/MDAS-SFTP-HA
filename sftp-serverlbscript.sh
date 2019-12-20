@@ -14,7 +14,7 @@ echo "Hey this is me Primary Host: $Server1 ------- Checking my status"
                 echo "Stopping  Seconday host $Server2 if they are running"
                 ssh -o StrictHostKeyChecking=no app@$Server2 "sh /app/scripts/Script_iptables.sh AddRule "
                 echo "Syncing data from Primary Server to  seconday server"
-                rsync -arvc -e 'ssh -o StrictHostKeyChecking=no' <source_path> <destination_path>
+                rsync -arvc -e 'ssh -o StrictHostKeyChecking=no' <source_path> app@$Server2:<destination_path>
 
         fi
 
@@ -29,8 +29,8 @@ elif [ $Server2 = `hostname -f` ]; then
         echo "Both Primary & Secondary is down"
         /usr/sbin/sendmail "$RECIPIENTS" < /app/scripts/indexing_failure_msg.txt
         cd /app/scripts ; sh Script_iptables.sh DelRule
-        echo "SFTP port is made up in $Server2"
+        echo "SFTP port is made up in $Server
         sleep 5
+        rsync -arvc -e 'ssh -o StrictHostKeyChecking=no' <source_path> app@$Server1:<destination_path>
         fi
-
 fi
