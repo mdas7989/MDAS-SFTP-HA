@@ -1,8 +1,8 @@
 #!/bin/bash
 
-Server1=sftp-server-469968540-1-851854196.prod.asda-sftp-server.ukgrsps.prod-az-uksouth-1.prod.uk.walmart.net
-Server2=sftp-server-469968534-1-851854114.prod.asda-sftp-server.ukgrsps.prod-az-ukwest-1.prod.uk.walmart.net
-RECIPIENTS="ANALYTICS_BITEAM@email.wal-mart.com,ASDADevOps@email.wal-mart.com"
+Server1=<Primary Server hostname>
+Server2=<Secondary Server Hostname>
+RECIPIENTS="mdas.070989@gmail.com"
 
 status1=`nc -v -z -w10 $Server1 2222 2>&1| grep -i Connected | wc -l`
 status2=`nc -v -z -w10 $Server2 2222 2>&1| grep -i Connected | wc -l`
@@ -34,15 +34,3 @@ elif [ $Server2 = `hostname -f` ]; then
         fi
 
 fi
-
-
-
-
-
-
-
-
-
-
-sudo iptables -A INPUT -p tcp --dport 2222 -m state --state NEW,ESTABLISHED -j DROP
-sudo iptables -D INPUT -p tcp -m tcp --dport 2222 -m state --state NEW,ESTABLISHED -j DROP
